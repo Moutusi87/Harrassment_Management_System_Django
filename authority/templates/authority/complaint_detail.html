@@ -1,0 +1,163 @@
+{% extends 'authority_base/authority_base.html' %}
+
+{% block title %} {{title}} {% endblock title %}
+
+
+{% block body %}
+<!-- partial -->
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="row bg-ligh">
+        
+        <div class="col-lg-12 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Complaint Details</h4>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
+                {% if not complaint.accept_status and complaint.decline_status %}
+                    
+                {% elif complaint.accept_status and not complaint.decline_status %}
+                {% else %}
+                  <a href="{% url 'authority:complaint_accept' complaint.id %}" type="button" class="btn btn-primary btn-fw mx-2">Accept Complaint</a>
+                  <a href="{% url 'authority:complaint_decline' complaint.id %}" type="button" class="btn btn-danger btn-fw">Decline Complaint</a>
+                {% endif %}
+                <button type="button" class="btn btn-danger btn-fw mx-4 ">
+                  <a href="{{ complaint.proof_file.url }}" target="_blank" rel="noopener noreferrer" class="text-white">Proof File</a>
+                </button>
+              </div>
+              <div class="card bg-light">
+                <div class="card-header text-dark">
+                  Student Details
+                </div>
+                <div class="card-body ">
+                    <table class="table col-lg-12">
+                        <tbody>
+                          <tr>
+                            <td>Case ID</td>
+                            <td> {{complaint.case_id}} </td>
+                          </tr>
+                          <tr>
+                            <td>Student Name:</td>
+                            <td> {{complaint.submit_by.full_name}} </td>
+                          </tr>
+                          <tr>
+                            <td>Student ID:</td>
+                            <td> {{complaint.submit_by.info_of.student_id}} </td>
+                          </tr>
+                          <tr>
+                            <td>Gender:</td>
+                            <td> {{complaint.submit_by.gender}} </td>
+                          </tr>
+                          <tr>
+                            <td>Department:</td>
+                            <td> {{complaint.submit_by.department}} </td>
+                          </tr>
+                          <tr>
+                            <td>Student phone:</td>
+                            <td> {{complaint.submit_by.student_phone}} </td>
+                          </tr>
+                          <tr>
+                            <td>Father Name:</td>
+                            <td> {{complaint.submit_by.father_name}} </td>
+                          </tr>
+                          <tr>
+                            <td>Mother Name:</td>
+                            <td> {{complaint.submit_by.mother_name}} </td>
+                          </tr>
+                          <tr>
+                            <td>Date of Birth:</td>
+                            <td> {{complaint.submit_by.dob}} </td>
+                          </tr>
+                          <tr>
+                            <td>Date of Birth:</td>
+                            <td> {{complaint.submit_by.gender}} </td>
+                          </tr>
+                          
+                          {% if complaint.accept_status %}
+                            <tr>
+                              <td>Status:</td>
+                              <td> Accpted </td>
+                            </tr>
+                            <tr>
+                              <td>Hearing Date:</td>
+                              <td> {{complaint.hearing_date}} </td>
+                            </tr>
+                            <tr>
+                              <td>Hearing Time:</td>
+                              <td> {{complaint.hearing_time}} </td>
+                            </tr>
+                            <tr>
+                              <td>Hearing Time:</td>
+                              <td> {{complaint.hearing_room}} </td>
+                            </tr>
+                            <tr>
+                              <td>Room No:</td>
+                              <td> Accpted </td>
+                            </tr>
+                          {% elif complaint.decline_status %}
+                            <tr>
+                              <td>Status:</td>
+                              <td> Rejected </td>
+                            </tr>
+                          {% else %}
+                            <tr>
+                              <td>Status:</td>
+                              <td> Pending </td>
+                            </tr>
+                          {% endif %}
+                            
+                        </tbody>
+                      </table>
+                </div>
+              </div>
+
+              <div class="card bg-light mt-4">
+                <div class="card-header text-dark">
+                  Accused Name
+                </div>
+                <div class="card-body ">
+                    <table class="table col-lg-12">
+                        <tbody>
+                          <tr>
+                            <td>Accused Name: </td>
+                            <td> {{complaint.accused_name}} </td>
+                          </tr>
+                          <tr>
+                            <td>accused By:</td>
+                            <td> {{complaint.accused_is}} </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <div class="card">
+                        <div class="card-body bg-light text-dark">
+                          <h3>Accused Details</h3>
+                          {{complaint.accoused_detail}}
+                        </div>
+                      </div>
+                </div>
+              </div>
+              <div class="card bg-light mt-4">
+                <div class="card-header text-dark">
+                 Complaint Details
+                </div>
+                <div class="card-body ">
+                    <table class="table col-lg-12">
+                      </table>
+                      <div class="card">
+                        <div class="card-body bg-light text-dark">
+                          <h4>Subject: {{complaint.subject}} </h4>
+                          {{complaint.description}}
+                        </div>
+                      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- content-wrapper ends -->
+   
+    <!-- partial -->
+</div>
+{% endblock body %}
